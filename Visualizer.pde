@@ -40,7 +40,7 @@ void pausePlayButtonClicked() {
     song.pause();
   } else {
    prepareDraw();
-   song = minim.loadFile("/Users/friedrichweise/Desktop/01.mp3", width/windowScale);
+   song = minim.loadFile(audioFilePath, width/windowScale);
    song.play(0);
   }
   running = !running;
