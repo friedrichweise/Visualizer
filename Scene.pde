@@ -12,7 +12,7 @@ public abstract class Scene {
 	public void drawScene(int currentTimeState) {
 		//@todo: implement specific drawing code
 	}
-	public void reactToKeyboardInput(String key) {
+	public void reactToKeyboardInput(char key) {
 		//@todo: implement specific code for keyboard events
 	}
 }

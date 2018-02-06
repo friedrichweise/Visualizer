@@ -1,64 +1,69 @@
 import ddf.minim.*;
 
 Minim minim;
-Scene[] activeScenes;
+int currentRun = 0;
+Scene activeScene;
+AudioSource currentAudioSource = new AudioSource();
+//defines the ratio between display width and equalizer buffer window
+private int windowScale = 2;
 
 void setup()
 {
-	size(800, 200);
+	fullScreen();
 	surface.setTitle("Visualizer");
 	surface.setResizable(true);
 	minim = new Minim(this);
-	selectInput("Select a file to play", "fileSelected");
+
+	MainMenu menu = new MainMenu("Main menu scene");
+	activeScene = menu;
 }
-String audioFilePath = "";
+
+
+void keyPressed() {
+	println("Key pushed: ", key);
+	//play from file selected, opening file input
+	if (key=='1') {
+		selectInput("Select a file to process:", "fileSelected");
+	} else if (key=='2') {
+	//use system lineIn input
+		initLineIn();
+	}
+	//fallback for scenes with keyboard support
+	activeScene.reactToKeyboardInput(key);
+}
+
 void fileSelected(File selection) {
 	if (selection == null) {
 		println("Window was closed or the user hit cancel.");
 	} else {
-		audioFilePath = selection.getAbsolutePath();
+		initFilePlay(selection.getAbsolutePath());
 	}
 }
-boolean running = false;
-AudioSource currentAudioSource = new AudioSource();
 
-void keyPressed() {
-	//@todo: run the reactToKeyboardInput() function on all active scenes
-	if (key=='1') {
-		pausePlayButtonClicked();
-	} else if (key=='2') {
-		lineInInputSelected();
-	} if (key=='b') {
-		running=true;
-	}
-}
-//scales our frame window from window width
-int windowScale = 2;
-void pausePlayButtonClicked() {
-	prepareDraw();
+void initFilePlay(String audioFilePath) {
 	AudioPlayer player;
 	player = minim.loadFile(audioFilePath, width/windowScale);
 	currentAudioSource.useAudioPlayer(player);
 	player.play(0);
+	startWithSimpleWaveform();
 }
-	
-void lineInInputSelected() {
+
+void initLineIn() {
 	AudioInput input;
 	input = minim.getLineIn(Minim.STEREO, width/windowScale);
 	currentAudioSource.useAudioInput(input);
+	startWithSimpleWaveform();
 }
 
+void startWithSimpleWaveform() {
+	SimpleWaveform waveform = new SimpleWaveform("First Simple Waveform Scene");
+	activeScene = waveform;
+}
 
-int currentRun = 0;
 void draw()
 {
-	//@todo: draw all active scenes
 	background(0);
-	if (running) {
-		drawWaveform();
-	} else {
-		drawMainMenu();
-	}
+	activeScene.drawScene(currentRun);
 	currentRun++;
 	if (currentRun == 3000) currentRun = 0;
 	delay(20);

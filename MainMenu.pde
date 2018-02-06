@@ -1,28 +1,36 @@
-import ddf.minim.*;
-
 public class MainMenu extends Scene {
 	private	PFont font;
-	private int fontSize = 10;
+	private int fontSize = 12;
 	private int lineHeight = this.fontSize+5;
-	public void initSceneWithName(String name) {
+
+	public MainMenu(String name) {
 		//init font
+		println("Construct menu with name: ", name);
 		this.font = createFont("Monospaced", this.fontSize);
 		textFont(this.font);
+		//selectInput("Select a file to play", "fileSelected");
 	}
+
 	public void drawScene(int currentTimeState) {
 		fill(255);
-		String[] lines = ["Welcome to the visulizer", "Press key 1 to start the visualizer for the following file: "+audioFilePath, "Press key 2 to start the visualizer with the signal from your default input device."];
-		for(int i=lines.length()-1; i<=0; i--) {
-			text(lines[i], 20, height(lineHeight*(i+1));
+		ArrayList<String> lines = new ArrayList<String>();
+		//@todo: reverse order
+		lines.add("-----------------------------------------------------");
+		lines.add(".                     from your default input device.");
+		lines.add("Press key 2 to start the visualizer with the signal  ");
+		lines.add("Press key 1 to start the visualizer for selected file.");
+		lines.add("-------------- Welcome to the visulizer ------------");
+		
+		for(int i=(lines.size()-1); i>=0; i--) {
+			text(lines.get(i), 70, height - (this.lineHeight*(i+1)) - 150);
 		}
-/*		text("Welcome to the visulizer", 20, height-(lineHeight*4));
-		text("Press key 1 to start the visualizer for the following file: "+audioFilePath, 20, height-(lineHeight*3));
-		text("Press key 2 to start the visualizer with the signal from your default input device.", 20, height-(lineHeight*2));
-		text("Press key b to start the selected visualizer.", 20, height-(lineHeight));*/
+		text("-!!- Escape to this Menu by pressing 'b' during live mode -!--", 70, 100);
 	}
-	public void reactToKeyboardInput(String key) {
-		//@todo
-		println('Key pushed: ', key);
+
+	public void reactToKeyboardInput(char key) {
+
 	}
 }
+
+
 
