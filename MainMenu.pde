@@ -16,7 +16,7 @@ public class MainMenu extends Scene {
 		ArrayList<String> lines = new ArrayList<String>();
 		//@todo: reverse order
 		lines.add("-----------------------------------------------------");
-		lines.add(".                     from your default input device.");
+		lines.add("from your default input device (!!Highly Beta!!).");
 		lines.add("Press key 2 to start the visualizer with the signal  ");
 		lines.add("Press key 1 to start the visualizer for selected file.");
 		lines.add("-------------- Welcome to the visulizer ------------");

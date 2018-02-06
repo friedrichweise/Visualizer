@@ -27,6 +27,9 @@ void keyPressed() {
 	} else if (key=='2') {
 	//use system lineIn input
 		initLineIn();
+	} else if (key=='b') {
+		MainMenu menu = new MainMenu("Main menu scene");
+		activeScene = menu;		
 	}
 	//fallback for scenes with keyboard support
 	activeScene.reactToKeyboardInput(key);
