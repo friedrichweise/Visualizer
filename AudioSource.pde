@@ -3,6 +3,9 @@ import ddf.minim.*;
 public class AudioSource {
 	private AudioPlayer audioPlayer = null;
 	private AudioInput audioInput = null;
+
+	private float[] currentLeftSet;
+	private float[] currentRightSet;
 	
 	public void useAudioPlayer(AudioPlayer p) {
 		println("Use AudioPlayer");
@@ -15,14 +18,10 @@ public class AudioSource {
 		this.audioPlayer = null;
 	}
 	public float getLeft(int i) {
-		if (this.audioPlayer == null) return this.audioInput.left.get(i);
-		else if (this.audioInput == null) return this.audioPlayer.left.get(i);
-		else return 0.0;
+		return this.currentLeftSet[i];
 	}
 	public float getRight(int i) {
-		if (this.audioPlayer == null) return this.audioInput.right.get(i);
-		else if (this.audioInput == null) return this.audioPlayer.right.get(i);
-		else return 0.0;
+		return this.currentRightSet[i];
 	}
 	public int getBufferSize() {
 		if (this.audioPlayer == null && this.audioInput != null) {
@@ -30,5 +29,16 @@ public class AudioSource {
 		} else if (this.audioInput == null && this.audioPlayer != null)  {
 			return this.audioPlayer.bufferSize();
 		} else return 0;
+	}
+	public void reframe() {
+		if (this.audioInput != null) {
+			this.currentLeftSet = this.audioInput.left.toArray();
+			this.currentRightSet = this.audioInput.right.toArray();
+		}
+		else if (this.audioPlayer != null) {
+			this.currentLeftSet = this.audioPlayer.left.toArray();
+			this.currentRightSet = this.audioPlayer.right.toArray();			
+		}
+		
 	}
 }

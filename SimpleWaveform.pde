@@ -26,6 +26,7 @@ public class SimpleWaveform extends Scene {
 	}
 
 	public void drawScene(int currentTimeState) {
+		currentAudioSource.reframe();
 		for (int i = 0; i < currentAudioSource.getBufferSize() - 1; i++)
 		{
 			float currentWidth = getCurrentWidth(i, currentTimeState);
