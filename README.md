@@ -2,6 +2,7 @@
 <i>A simple audio Visualizer written in Processing using the minim library</i>
 
 <img src="demo.gif" style="margin: 2em auto; display: block;">
+<img src="menu.png" style="margin: 2em auto; display: block;">
 
 ## Developer
 * install Processing
