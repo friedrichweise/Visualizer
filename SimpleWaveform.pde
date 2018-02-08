@@ -5,6 +5,7 @@ public class SimpleWaveform extends Scene {
 	private int yLine2;
 
 	public SimpleWaveform(String name) {
+		super(name);
 		println("Construct SimpleWaveform with name: ", name);
 		this.yLine1 = Math.round(0.25 * height);
 		this.yLine2 = Math.round(0.75 * height);
@@ -31,11 +32,15 @@ public class SimpleWaveform extends Scene {
 		{
 			float currentWidth = getCurrentWidth(i, currentTimeState);
 			float currentHue = getCurrentHueForLine1(i, currentTimeState);
+			
 			strokeWeight(currentWidth);
 			stroke(currentHue, this.colorSaturation, 80.0);
 			line(i*windowScale, this.yLine1 + currentAudioSource.getLeft(i)*lineScale, (i+1)*windowScale, this.yLine1 + currentAudioSource.getLeft(i+1)*lineScale);
 			stroke(getCurrentHueForLine2(i, currentTimeState), colorSaturation, 80.0);
 			line(i*windowScale, this.yLine2 + currentAudioSource.getRight(i)*lineScale, (i+1)*windowScale, this.yLine2 + currentAudioSource.getRight(i+1)*lineScale);
 		}
+	}
+	public void reactToKeyboardInput(char key) {
+		return;
 	}
 }

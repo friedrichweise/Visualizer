@@ -4,6 +4,7 @@ public class MainMenu extends Scene {
 	private int lineHeight = this.fontSize+5;
 
 	public MainMenu(String name) {
+		super(name);
 		//init font
 		println("Construct menu with name: ", name);
 		this.font = createFont("Monospaced", this.fontSize);
