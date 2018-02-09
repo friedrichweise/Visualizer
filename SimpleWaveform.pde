@@ -1,5 +1,4 @@
 public class SimpleWaveform extends Scene {
-	private int lineScale = 100;
 	private float colorSaturation = 20.0;
 	private int yLine1;
 	private int yLine2;
@@ -32,12 +31,11 @@ public class SimpleWaveform extends Scene {
 		{
 			float currentWidth = getCurrentWidth(i, currentTimeState);
 			float currentHue = getCurrentHueForLine1(i, currentTimeState);
-			
 			strokeWeight(currentWidth);
 			stroke(currentHue, this.colorSaturation, 80.0);
-			line(i*windowScale, this.yLine1 + currentAudioSource.getLeft(i)*lineScale, (i+1)*windowScale, this.yLine1 + currentAudioSource.getLeft(i+1)*lineScale);
+			line(i*windowScale, this.yLine1 + currentAudioSource.getLeft(i), (i+1)*windowScale, this.yLine1 + currentAudioSource.getLeft(i+1));
 			stroke(getCurrentHueForLine2(i, currentTimeState), colorSaturation, 80.0);
-			line(i*windowScale, this.yLine2 + currentAudioSource.getRight(i)*lineScale, (i+1)*windowScale, this.yLine2 + currentAudioSource.getRight(i+1)*lineScale);
+			line(i*windowScale, this.yLine2 + currentAudioSource.getRight(i), (i+1)*windowScale, this.yLine2 + currentAudioSource.getRight(i+1));
 		}
 	}
 	public void reactToKeyboardInput(char key) {

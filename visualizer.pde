@@ -13,9 +13,8 @@ void setup()
 	surface.setTitle("Visualizer");
 	surface.setResizable(true);
 	minim = new Minim(this);
-
-	MainMenu menu = new MainMenu("Main menu scene");
-	activeScene = menu;
+	//activate main menu
+	enableScene("mainmenu");
 }
 
 
@@ -25,11 +24,10 @@ void keyPressed() {
 	if (key=='1') {
 		selectInput("Select a file to process:", "fileSelected");
 	} else if (key=='2') {
-	//use system lineIn input
+		//use system lineIn input
 		initLineIn();
 	} else if (key=='b') {
-		MainMenu menu = new MainMenu("Main menu scene");
-		activeScene = menu;		
+		enableScene("mainmenu");		
 	}
 	//fallback for scenes with keyboard support
 	activeScene.reactToKeyboardInput(key);
@@ -48,19 +46,23 @@ void initFilePlay(String audioFilePath) {
 	player = minim.loadFile(audioFilePath, width/windowScale);
 	currentAudioSource.useAudioPlayer(player);
 	player.play(0);
-	startWithSimpleWaveform();
+	enableScene("waveform");
 }
 
 void initLineIn() {
 	AudioInput input;
-	input = minim.getLineIn(Minim.STEREO, width/windowScale);
+	input = minim.getLineIn(Minim.STEREO);
 	currentAudioSource.useAudioInput(input);
-	startWithSimpleWaveform();
+	enableScene("waveform");
 }
 
-void startWithSimpleWaveform() {
-	SimpleWaveform waveform = new SimpleWaveform("First Simple Waveform Scene");
-	activeScene = waveform;
+//@todo: move to own scene manager
+void enableScene(String sceneIdentifier) {
+	if(sceneIdentifier == "mainmenu") {
+		activeScene = new MainMenu("Main menu scene");
+	} else if(sceneIdentifier == "waveform") {
+		activeScene = new SimpleWaveform("First Simple Waveform Scene");
+	}
 }
 
 void draw()
