@@ -1,7 +1,7 @@
 import ddf.minim.*;
 
 Minim minim;
-int currentRun = 0;
+float currentRun = 0;
 Scene activeScene;
 AudioSource currentAudioSource = new AudioSource();
 //defines the ratio between display width and equalizer buffer window
@@ -45,12 +45,13 @@ void initFilePlay(String audioFilePath) {
 	player = minim.loadFile(audioFilePath, width/windowScale);
 	currentAudioSource.useAudioPlayer(player);
 	player.play(0);
+	println("Init AudioPlayer with buffer size: ", width/windowScale);
 	enableScene("waveform");
 }
 
 void initLineIn() {
 	AudioInput input;
-	input = minim.getLineIn(Minim.STEREO);
+	input = minim.getLineIn(Minim.STEREO, width/windowScale);
 	currentAudioSource.useAudioInput(input);
 	enableScene("waveform");
 }
@@ -68,7 +69,7 @@ void draw()
 {
 	background(0);
 	activeScene.drawScene(currentRun);
-	currentRun++;
-	if (currentRun == 3000) currentRun = 0;
-	delay(10);
+	currentRun += 0.01;
+	if (currentRun == 10) currentRun = 0;
+	delay(40);
 }

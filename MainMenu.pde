@@ -12,7 +12,7 @@ public class MainMenu extends Scene {
 		//selectInput("Select a file to play", "fileSelected");
 	}
 
-	public void drawScene(int currentTimeState) {
+	public void drawScene(float currentTimeState) {
 		fill(255);
 		ArrayList<String> lines = new ArrayList<String>();
 		//@todo: reverse order

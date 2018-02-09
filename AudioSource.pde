@@ -23,11 +23,13 @@ public class AudioSource {
 		this.valueScale = 5000;
 	}
 	public float getLeft(int i) {
-		return this.currentLeftSet[i]*this.valueScale;
+		return this.currentLeftSet[i];
 	}
 	public float getRight(int i) {
-		return this.currentRightSet[i]*this.valueScale;
+		return this.currentRightSet[i];
+		//return this.currentRightSet[i]*this.valueScale;
 	}
+	
 	public int getBufferSize() {
 		if (this.audioPlayer == null && this.audioInput != null) {
 			return this.audioInput.bufferSize();

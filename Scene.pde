@@ -5,6 +5,6 @@ public abstract class Scene {
 	public Scene(String name) {
 		this.name = name;
 	}
-	public abstract void drawScene(int currentTimeState);
+	public abstract void drawScene(float currentTimeState);
 	public abstract void reactToKeyboardInput(char key);
 }
