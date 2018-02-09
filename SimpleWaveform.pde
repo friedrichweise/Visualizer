@@ -1,5 +1,7 @@
 public class SimpleWaveform extends Scene {
 	private float colorSaturation = 20.0;
+	private float colorSaturationMax = 80.0;
+	private float colorSaturationMin = 10.0;
 	private int yLine1;
 	private int yLine2;
 
@@ -39,6 +41,12 @@ public class SimpleWaveform extends Scene {
 		}
 	}
 	public void reactToKeyboardInput(char key) {
-		return;
+		if(key=='o') {
+			if(this.colorSaturation < this.colorSaturationMax) this.colorSaturation += 1;
+		} else if(key=='l') {
+			if(this.colorSaturation > this.colorSaturationMin) this.colorSaturation -= 1;
+		}
+		String debugString = "Current Values: \n Saturation: "+this.colorSaturation+"\n---------------";
+		println(debugString);
 	}
 }

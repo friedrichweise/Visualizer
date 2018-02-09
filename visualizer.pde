@@ -19,7 +19,6 @@ void setup()
 
 
 void keyPressed() {
-	println("Key pushed: ", key);
 	//play from file selected, opening file input
 	if (key=='1') {
 		selectInput("Select a file to process:", "fileSelected");
@@ -71,5 +70,5 @@ void draw()
 	activeScene.drawScene(currentRun);
 	currentRun++;
 	if (currentRun == 3000) currentRun = 0;
-	delay(20);
+	delay(10);
 }
