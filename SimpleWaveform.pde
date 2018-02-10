@@ -5,22 +5,17 @@ public class SimpleWaveform extends Scene {
 
 	private int upperScaleBoundary = 100;
 
-	private float internalLineVariation = 50;
-	private float internalLineVariationMin = 10;
+	private float internalLineVariation = 80;
+	private float internalLineVariationMin = 30;
 
 	private float widthDifference = 1;
-	private float widthDifferenceMax = 5.0;
-
-	private int yLine1;
-	private int yLine2;
+	private float widthDifferenceMax = 5.0; 
 
 	private int numberOfLines = 2;
 
 	public SimpleWaveform(String name) {
 		super(name);
 		println("Construct SimpleWaveform with name: ", name);
-		this.yLine1 = Math.round(0.25 * height);
-		this.yLine2 = Math.round(0.75 * height);
 		colorMode(HSB, 100.0);
 	}
 
@@ -39,6 +34,7 @@ public class SimpleWaveform extends Scene {
 		float value = 0.0;
 		if (type=="left") value = currentAudioSource.getLeft(i);
 		else if(type=="right") value = currentAudioSource.getRight(i);
+		else if(type=="center") value = currentAudioSource.getCenter(i);
 		return map(value, -1, 1, 0, this.upperScaleBoundary);
 	}
 
@@ -52,7 +48,7 @@ public class SimpleWaveform extends Scene {
 			for (int i = 0; i < currentAudioSource.getBufferSize() - 1; i++) {
 				strokeWeight(getCurrentWidth(i));
 				stroke(getCurrentHueForLine(i, currentTimeState, line), this.colorSaturation, 80.0);
-				line(i*windowScale, y + getValueFromAudioBuffer("left", i), (i+1)*windowScale, y + getValueFromAudioBuffer("left", i+1));
+				line(i*windowScale, y + getValueFromAudioBuffer("center", i), (i+1)*windowScale, y + getValueFromAudioBuffer("center", i+1));
 			}
 		}
 	}

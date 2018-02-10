@@ -8,6 +8,7 @@ public class AudioSource {
 
 	private float[] currentLeftSet;
 	private float[] currentRightSet;
+	private float[] currentCenterSet;
 	
 	public void useAudioPlayer(AudioPlayer p) {
 		println("Use AudioPlayer");
@@ -18,6 +19,7 @@ public class AudioSource {
 	public void useAudioInput(AudioInput i) {
 		println("Use AudioInput");
 		i.setGain(10.0);
+		i.disableMonitoring();
 		this.audioInput = i;
 		this.audioPlayer = null;
 		this.valueScale = 5000;
@@ -28,6 +30,9 @@ public class AudioSource {
 	public float getRight(int i) {
 		return this.currentRightSet[i];
 		//return this.currentRightSet[i]*this.valueScale;
+	}
+	public float getCenter(int i) {
+		return this.currentCenterSet[i];
 	}
 	
 	public int getBufferSize() {
@@ -41,10 +46,12 @@ public class AudioSource {
 		if (this.audioInput != null) {
 			this.currentLeftSet = this.audioInput.left.toArray();
 			this.currentRightSet = this.audioInput.right.toArray();
+			this.currentCenterSet = this.audioInput.mix.toArray();
 		}
 		else if (this.audioPlayer != null) {
 			this.currentLeftSet = this.audioPlayer.left.toArray();
-			this.currentRightSet = this.audioPlayer.right.toArray();			
+			this.currentRightSet = this.audioPlayer.right.toArray();
+			this.currentCenterSet = this.audioPlayer.mix.toArray();			
 		}
 		
 	}

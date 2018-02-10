@@ -9,9 +9,10 @@ private int windowScale = 2;
 
 void setup()
 {
-	fullScreen();
+	fullScreen(SPAN);
 	surface.setTitle("Visualizer");
 	surface.setResizable(true);
+
 	minim = new Minim(this);
 	//activate main menu
 	enableScene("mainmenu");
