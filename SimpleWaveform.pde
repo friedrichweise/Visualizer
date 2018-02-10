@@ -5,14 +5,16 @@ public class SimpleWaveform extends Scene {
 
 	private int upperScaleBoundary = 100;
 
-	private float widthLineVariation = 50;
-	private float widthLineVariationMin = 10;
+	private float internalLineVariation = 50;
+	private float internalLineVariationMin = 10;
 
 	private float widthDifference = 1;
-	private float widthDifferenceMax = 2.8;
+	private float widthDifferenceMax = 5.0;
 
 	private int yLine1;
 	private int yLine2;
+
+	private int numberOfLines = 2;
 
 	public SimpleWaveform(String name) {
 		super(name);
@@ -22,18 +24,14 @@ public class SimpleWaveform extends Scene {
 		colorMode(HSB, 100.0);
 	}
 
-	private float getCurrentHueForLine1(int step, float run) {
-		//float runOffSet = (30.0*cos((run*0.01)+10)+60.0);
-		return 10.0*cos(step*0.01);
-	}
-	private float getCurrentHueForLine2(int step, float run) {
-		//float runOffSet = (30.0*cos(run*0.01)+60.0);
-		return 10.0*cos(step*0.01);
+	private float getCurrentHueForLine(int step, float run, int line) {
+		float lineDrift = map(line, 0, this.numberOfLines, 0, 6);
+		float runOffSet = (25.0*cos((run*0.6+lineDrift))+50.0);
+		return 6.0*cos(step*(1/this.internalLineVariation))+6.0+runOffSet;
 	}
 
-	private float getCurrentWidth(int step, float run) {
-		//float runOffSet = (2*cos(run*0.001)+3);
-		return this.widthDifference*cos(step*(1/this.widthLineVariation))+3;
+	private float getCurrentWidth(int step) {
+		return this.widthDifference*cos(step*(1/this.internalLineVariation))+this.widthDifference+3;
 	}
 
 
@@ -45,15 +43,17 @@ public class SimpleWaveform extends Scene {
 	}
 
 	public void drawScene(float currentTimeState) {
+		float singleLineStep = 1.0/((float)this.numberOfLines+1.0);
 		currentAudioSource.reframe();
-		for (int i = 0; i < currentAudioSource.getBufferSize() - 1; i++)
-		{
-			strokeWeight(getCurrentWidth(i, currentTimeState));
-
-			stroke(getCurrentHueForLine1(i, currentTimeState), this.colorSaturation, 80.0);
-			line(i*windowScale, this.yLine1 + getValueFromAudioBuffer("left", i), (i+1)*windowScale, this.yLine1 + getValueFromAudioBuffer("left", i+1));
-			stroke(getCurrentHueForLine2(i, currentTimeState), colorSaturation, 80.0);
-			line(i*windowScale, this.yLine2 + getValueFromAudioBuffer("right", i), (i+1)*windowScale, this.yLine2 + getValueFromAudioBuffer("right", i+1));
+		//each line
+		for(int line=1; line<=this.numberOfLines; line++) {
+			//calculate y position of each line
+			int y = Math.round(((float)(line)*singleLineStep) * height);
+			for (int i = 0; i < currentAudioSource.getBufferSize() - 1; i++) {
+				strokeWeight(getCurrentWidth(i));
+				stroke(getCurrentHueForLine(i, currentTimeState, line), this.colorSaturation, 80.0);
+				line(i*windowScale, y + getValueFromAudioBuffer("left", i), (i+1)*windowScale, y + getValueFromAudioBuffer("left", i+1));
+			}
 		}
 	}
 	//@todo: add a more generalized concept of mutations
@@ -63,19 +63,23 @@ public class SimpleWaveform extends Scene {
 		} else if(key=='l') {
 			if(this.colorSaturation > this.colorSaturationMin) this.colorSaturation -= 1;
 		} else if(key=='i') {
-			this.upperScaleBoundary += 3;
+			this.upperScaleBoundary += 2;
 		} else if(key=='k') {
-			this.upperScaleBoundary -= 3;
+			this.upperScaleBoundary -= 2;
 		} else if(key=='u') {
-			if(this.widthLineVariation > this.widthLineVariationMin) this.widthLineVariation -= 5;
+			if(this.internalLineVariation > this.internalLineVariationMin) this.internalLineVariation -= 5;
 		} else if(key=='j') {
-			this.widthLineVariation += 5;
+			this.internalLineVariation += 5;
 		} else if(key=='z') {
 			if(this.widthDifference < this.widthDifferenceMax) this.widthDifference += 0.1;
 		} else if(key=='h') {
 			if(this.widthDifference > 0.1) this.widthDifference -= 0.1;
+		} else if(key=='q') {
+			if(this.numberOfLines < 20) this.numberOfLines++;
+		} else if(key=='a') {
+			if(this.numberOfLines > 2) this.numberOfLines--;
 		}
-		String debugString = "Current Values: \n Saturation: "+this.colorSaturation+"\n UpperBoundary: "+this.upperScaleBoundary+"\nWidthLineVariation: "+this.widthLineVariation+"\nWidthDifference: "+this.widthDifference+"\n---------------";
+		String debugString = "Current Values: \n Saturation: "+this.colorSaturation+"\n UpperBoundary: "+this.upperScaleBoundary+"\ninternalLineVariation: "+this.internalLineVariation+"\nWidthDifference: "+this.widthDifference+"\n---------------";
 		println(debugString);
 	}
 }

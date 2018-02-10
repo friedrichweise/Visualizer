@@ -69,7 +69,7 @@ void draw()
 {
 	background(0);
 	activeScene.drawScene(currentRun);
-	currentRun += 0.01;
+	currentRun += 0.005;
 	if (currentRun == 10) currentRun = 0;
 	delay(40);
 }

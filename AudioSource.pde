@@ -40,7 +40,6 @@ public class AudioSource {
 	public void reframe() {
 		if (this.audioInput != null) {
 			this.currentLeftSet = this.audioInput.left.toArray();
-			println(this.currentLeftSet);
 			this.currentRightSet = this.audioInput.right.toArray();
 		}
 		else if (this.audioPlayer != null) {
