@@ -3,7 +3,7 @@ public class SimpleWaveform extends Scene {
 	private float colorSaturationMax = 80.0;
 	private float colorSaturationMin = 10.0;
 
-	private int upperScaleBoundary = 100;
+	private int upperScaleBoundary = 200;
 
 	private float internalLineVariation = 80;
 	private float internalLineVariationMin = 30;
@@ -11,7 +11,7 @@ public class SimpleWaveform extends Scene {
 	private float widthDifference = 1;
 	private float widthDifferenceMax = 5.0; 
 
-	private int numberOfLines = 2;
+	private int numberOfLines = 1;
 
 	public SimpleWaveform(String name) {
 		super(name);
@@ -26,7 +26,7 @@ public class SimpleWaveform extends Scene {
 	}
 
 	private float getCurrentWidth(int step) {
-		return this.widthDifference*cos(step*(1/this.internalLineVariation))+this.widthDifference+3;
+		return this.widthDifference*cos(step*(1/this.internalLineVariation))+this.widthDifference+2;
 	}
 
 
@@ -54,6 +54,16 @@ public class SimpleWaveform extends Scene {
 	}
 	//@todo: add a more generalized concept of mutations
 	public void reactToKeyboardInput(char key) {
+		/*
+		 * O,L -> Saturation
+		 * I,K -> Gain
+		 * U,J -> Variation innerhalb der Linie
+		 * Z,H -> Varainz in der Linienstärke
+		 * Q,A -> Anzahl der Linien
+		 */
+
+
+
 		if(key=='o') {
 			if(this.colorSaturation < this.colorSaturationMax) this.colorSaturation += 1;
 		} else if(key=='l') {
@@ -73,7 +83,7 @@ public class SimpleWaveform extends Scene {
 		} else if(key=='q') {
 			if(this.numberOfLines < 20) this.numberOfLines++;
 		} else if(key=='a') {
-			if(this.numberOfLines > 2) this.numberOfLines--;
+			if(this.numberOfLines > 1) this.numberOfLines--;
 		}
 		String debugString = "Current Values: \n Saturation: "+this.colorSaturation+"\n UpperBoundary: "+this.upperScaleBoundary+"\ninternalLineVariation: "+this.internalLineVariation+"\nWidthDifference: "+this.widthDifference+"\n---------------";
 		println(debugString);

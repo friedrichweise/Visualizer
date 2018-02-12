@@ -9,7 +9,7 @@ private int windowScale = 2;
 
 void setup()
 {
-	fullScreen(SPAN);
+	fullScreen(P2D, 2);
 	surface.setTitle("Visualizer");
 	surface.setResizable(true);
 
