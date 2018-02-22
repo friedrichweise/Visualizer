@@ -9,7 +9,7 @@ private int windowScale = 2;
 
 void setup()
 {
-	fullScreen(P2D, 2);
+	fullScreen(P2D);
 	surface.setTitle("Visualizer");
 	surface.setResizable(true);
 
@@ -57,7 +57,7 @@ void initLineIn() {
 	enableScene("waveform");
 }
 
-//@todo: move to own scene manager
+//@cando: move to own scene manager
 void enableScene(String sceneIdentifier) {
 	if(sceneIdentifier == "mainmenu") {
 		activeScene = new MainMenu("Main menu scene");
@@ -66,6 +66,7 @@ void enableScene(String sceneIdentifier) {
 	}
 }
 
+//really simple time based variations
 void draw()
 {
 	background(0);

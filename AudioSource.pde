@@ -29,7 +29,6 @@ public class AudioSource {
 	}
 	public float getRight(int i) {
 		return this.currentRightSet[i];
-		//return this.currentRightSet[i]*this.valueScale;
 	}
 	public float getCenter(int i) {
 		return this.currentCenterSet[i];

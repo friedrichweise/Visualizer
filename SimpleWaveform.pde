@@ -52,18 +52,15 @@ public class SimpleWaveform extends Scene {
 			}
 		}
 	}
-	//@todo: add a more generalized concept of mutations
+	//@todo: add a more generalized concept of mutations and document them!
 	public void reactToKeyboardInput(char key) {
 		/*
 		 * O,L -> Saturation
 		 * I,K -> Gain
 		 * U,J -> Variation innerhalb der Linie
 		 * Z,H -> Varainz in der Linienstärke
-		 * Q,A -> Anzahl der Linien
+		 * Q,A -> Anzahl der Linienqq
 		 */
-
-
-
 		if(key=='o') {
 			if(this.colorSaturation < this.colorSaturationMax) this.colorSaturation += 1;
 		} else if(key=='l') {
